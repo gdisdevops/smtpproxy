@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-var validRecipients *regexp.Regexp
+var validRecipients *[]*regexp.Regexp
 
 func Check() {
 	if RelayHost() == "" {
@@ -17,13 +17,17 @@ func Check() {
 		os.Exit(1)
 	}
 
-	rx, err := regexp.Compile(os.Getenv("VALID_RECIPIENTS"))
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Invalid regular expression VALID_RECIPIENTS: %v\n",
-			err)
-		os.Exit(1)
+	v := strings.Split(os.Getenv("VALID_RECIPIENTS"), ",")
+	validRecipients = &[]*regexp.Regexp{}
+	for _, recp := range v {
+		rx, err := regexp.Compile(recp)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Invalid regular expression VALID_RECIPIENTS: %v\n", err)
+			os.Exit(1)
+		}
+		*validRecipients = append(*validRecipients, rx)
 	}
-	validRecipients = rx
+
 	// Listening stuff
 	listenpid := os.Getenv("LISTEN_PID")
 	if listenpid != "" {
@@ -56,7 +60,7 @@ func DNSBL() []string {
 	return strings.Split(os.Getenv("DNSBL_DOMAINS"), " ")
 }
 
-func ValidRecipient() *regexp.Regexp {
+func ValidRecipient() *[]*regexp.Regexp {
 	return validRecipients
 }
 

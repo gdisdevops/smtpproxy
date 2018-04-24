@@ -8,8 +8,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/jorgenschaefer/smtpproxy/config"
-	"github.com/jorgenschaefer/smtpproxy/smtpd"
+	"github.com/michelvocks/smtpproxy/config"
+	"github.com/michelvocks/smtpproxy/smtpd"
 )
 
 func TestSMTPProxy(t *testing.T) {

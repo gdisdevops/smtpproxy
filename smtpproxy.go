@@ -5,10 +5,10 @@ import (
 	"net"
 	"os"
 
-	"github.com/jorgenschaefer/smtpproxy/argerror"
-	"github.com/jorgenschaefer/smtpproxy/config"
-	"github.com/jorgenschaefer/smtpproxy/proxy"
-	"github.com/jorgenschaefer/smtpproxy/smtpd"
+	"github.com/michelvocks/smtpproxy/argerror"
+	"github.com/michelvocks/smtpproxy/config"
+	"github.com/michelvocks/smtpproxy/proxy"
+	"github.com/michelvocks/smtpproxy/smtpd"
 )
 
 func main() {
@@ -35,11 +35,10 @@ func main() {
 func listen() (net.Listener, error) {
 	if config.ListenMode() == "address" {
 		return net.Listen("tcp", config.ListenAddress())
-	} else {
-		f := os.NewFile(config.ListenFD(), "LISTEN_FD")
-		defer f.Close()
-		return net.FileListener(f)
 	}
+	f := os.NewFile(config.ListenFD(), "LISTEN_FD")
+	defer f.Close()
+	return net.FileListener(f)
 }
 
 func handleConnection(conn smtpd.Connection) {

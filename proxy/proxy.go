@@ -9,10 +9,10 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/jorgenschaefer/smtpproxy/argerror"
-	"github.com/jorgenschaefer/smtpproxy/config"
-	"github.com/jorgenschaefer/smtpproxy/dnsbl"
-	"github.com/jorgenschaefer/smtpproxy/smtpd"
+	"github.com/michelvocks/smtpproxy/argerror"
+	"github.com/michelvocks/smtpproxy/config"
+	"github.com/michelvocks/smtpproxy/dnsbl"
+	"github.com/michelvocks/smtpproxy/smtpd"
 )
 
 type State struct {
@@ -231,5 +231,11 @@ func extractRecipient(data string) (string, bool) {
 }
 
 func isValidRecipient(recipient string) bool {
-	return config.ValidRecipient().MatchString(recipient)
+	recp := config.ValidRecipient()
+	for id := range *recp {
+		if v := (*recp)[id].MatchString(recipient); v {
+			return true
+		}
+	}
+	return false
 }

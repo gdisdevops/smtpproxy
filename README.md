@@ -16,12 +16,12 @@ for configuration. See [`example/defaults`](example/defaults) for the
 list of supported options.
 
 ```
-go get github.com/jorgenschaefer/smtpproxy
+go get github.com/michelvocks/smtpproxy
 cp $GOPATH/bin/smtpproxy /usr/local/sbin/
-cp $GOPATH/src/github.com/jorgenschaefer/smtpproxy/example/smtpproxy.service \
-   $GOPATH/src/github.com/jorgenschaefer/smtpproxy/example/smtpproxy.socket \
+cp $GOPATH/src/github.com/michelvocks/smtpproxy/example/smtpproxy.service \
+   $GOPATH/src/github.com/michelvocks/smtpproxy/example/smtpproxy.socket \
    /etc/systemd/system/
-cp $GOPATH/src/github.com/jorgenschaefer/smtpproxy/example/defaults \
+cp $GOPATH/src/github.com/michelvocks/smtpproxy/example/defaults \
    /etc/default/smtpproxy
 systemctl daemon-reload
 $EDITOR /etc/default/smtpproxy
