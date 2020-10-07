@@ -154,6 +154,7 @@ func (s *State) handleRcpt(args string) error {
 		return s.TarpitError("Error: Syntax error in RCPT command")
 	}
 	if !isValidRecipient(recipient) {
+		s.conn.Reply(541, "Recipient " + recipient + " rejected")
 		s.args["recipient"] = recipient
 		return s.TarpitError("Error: Relay access denied")
 	}
